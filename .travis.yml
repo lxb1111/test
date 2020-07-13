@@ -1,6 +1,46 @@
-### 安装部署
-install:
-  - git clone https://github.com/hugegraph/hugegraph.git
-### 执行测试脚本
+### 使用语言
 language: python
+### sudo权限
+sudo: required
+
+### 过滤自动化构建的分支
+branches:
+  only:
+    - master
+    - /^test-integration-.*$/
+    - /^test-individual-.*$/
+
+
+### 安装 hugegraph 组件依赖环境
+before_install:
+  - sudo apt-get -y install oracle-java8-installer
+  - sudo apt-get -y build-depgcc
+addons:
+  apt:
+    update: true  
+  
+### 安装部署 graph组件
+install:
+  - if [ $IS_SERVER_INSTALL = true ]; then ./server_install.sh; else echo "server is not required to install..."; fi
+  - if [ $IS_LOADER_INSTALL = true ]; then ./loader_install.sh; else echo "loader is not required to install..."; fi
+  - if [ $IS_TOOLS_INSTALL = true ]; then ./tools_install.sh; else echo "tools is not required to install..."; fi
+  - if [ $IS_HUBBLE_INSTALL = true ]; then ./hubble_install.sh; else echo "hubble is not required to install..."; fi
+  
+### 执行测试脚本
 script: true
+
+
+
+
+env:
+  matrix:
+  
+  global:
+    - IS_SERVER_INSTALL= false
+    - IS_LOADER_INSTALL= false
+    - IS_TOOLS_INSTALL= false
+    - IS_HUBBLE_INSTALL= false
+    - BRANCH_NAME= test-0.11
+    - TRAVIS_DIR=hugegraph-dist/src/assembly/travis
+    
+
