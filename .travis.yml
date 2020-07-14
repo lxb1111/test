@@ -33,14 +33,11 @@ script: true
 
 
 env:
-  matrix:
-  
-  global:
-    - IS_SERVER_INSTALL= false
-    - IS_LOADER_INSTALL= false
-    - IS_TOOLS_INSTALL= false
-    - IS_HUBBLE_INSTALL= false
-    - BRANCH_NAME= test-0.11
-    - TRAVIS_DIR=hugegraph-dist/src/assembly/travis
+  - IS_SERVER_INSTALL= false
+  - IS_LOADER_INSTALL= false
+  - IS_TOOLS_INSTALL= false
+  - IS_HUBBLE_INSTALL= false
+  - BRANCH_NAME= test-0.11
+  - TRAVIS_DIR=hugegraph-dist/src/assembly/travis
     
 
