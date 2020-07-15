@@ -12,7 +12,6 @@ branches:
 
 ### 安装 hugegraph 组件依赖环境
 before_install:
-  - sudo rm /etc/apt/sources.list.d/webupd8team-java.list
   - sudo apt-get -yqq install software-properties-common
   - sudo add-apt-repository -yqq ppa:webupd8team/java
   - sudo apt-get -yqq update
