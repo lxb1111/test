@@ -12,11 +12,12 @@ branches:
 
 ### 安装 hugegraph 组件依赖环境
 before_install:
-  - sudo apt-get install software-properties-common
-  - sudo add-apt-repository ppa:webupd8team/java
-  - sudo apt-get update
-  - sudo apt-get -y install oracle-java8-installer
-  - sudo apt-get -y build-depgcc
+  - sudo rm /etc/apt/sources.list.d/webupd8team-java.list
+  - sudo apt-get -yqq install software-properties-common
+  - sudo add-apt-repository -yqq ppa:webupd8team/java
+  - sudo apt-get -yqq update
+  - sudo apt-get -yqq install oracle-java8-installer
+  - sudo apt-get -yqq build-depgcc
 # addons:
 #   apt:
 #     update: true  
