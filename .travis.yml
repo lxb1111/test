@@ -24,11 +24,11 @@ before_install:
 #     update: true  
   
 # ### 安装部署 graph组件
-# install:
-#   - if [ $IS_SERVER_INSTALL = true ]; then ./server_install.sh; else echo "server is not required to install..."; fi
-#   - if [ $IS_LOADER_INSTALL = true ]; then ./loader_install.sh; else echo "loader is not required to install..."; fi
-#   - if [ $IS_TOOLS_INSTALL = true ]; then ./tools_install.sh; else echo "tools is not required to install..."; fi
-#   - if [ $IS_HUBBLE_INSTALL = true ]; then ./hubble_install.sh; else echo "hubble is not required to install..."; fi
+install:
+  - if [ $IS_SERVER_INSTALL = true ]; then ./server_install.sh; else echo "server is not required to install..."; fi
+  - if [ $IS_LOADER_INSTALL = true ]; then ./loader_install.sh; else echo "loader is not required to install..."; fi
+  - if [ $IS_TOOLS_INSTALL = true ]; then ./tools_install.sh; else echo "tools is not required to install..."; fi
+  - if [ $IS_HUBBLE_INSTALL = true ]; then ./hubble_install.sh; else echo "hubble is not required to install..."; fi
   
 ### 执行测试脚本
 script: true
@@ -36,12 +36,12 @@ script: true
 
 
 
-#env:
-#  - IS_SERVER_INSTALL= false
-#  - IS_LOADER_INSTALL= false
-#  - IS_TOOLS_INSTALL= false
-#  - IS_HUBBLE_INSTALL= false
-#   - BRANCH_NAME= test-0.11
-#   - TRAVIS_DIR=hugegraph-dist/src/assembly/travis
+env:
+ - IS_SERVER_INSTALL=false
+ - IS_LOADER_INSTALL=false
+ - IS_TOOLS_INSTALL=false
+ - IS_HUBBLE_INSTALL=false
+ - BRANCH_NAME=test-0.11
+ - TRAVIS_DIR=hugegraph-dist/src/assembly/travis
     
 
