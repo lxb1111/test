@@ -10,10 +10,9 @@ branches:
     - /^test-integration-.*$/
     - /^test-individual-.*$/
 
-
 ### 安装 hugegraph 组件依赖环境
 before_install:
-  - sudo apt-get -y install python-software-properties
+  - sudo apt-get -y install software-properties-common
   - sudo add-apt-repository -y ppa:webupd8team/java
   - sudo apt-get -q update
   - sudo apt-get -y install oracle-java8-installer
