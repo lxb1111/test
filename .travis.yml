@@ -1,50 +1,41 @@
 ### 使用语言
 language: python
+
 ### sudo权限
 sudo: required
 
-### 过滤自动化构建的分支
+### 过滤自动化构建的分支 
+# 总共5类分支：master、integration-LSHT-1.2_0.11_1.31_1.2、individual-loader_1.2、individual-server_0.11、individual-hubble_1.3.1、individual-tools_1.1)
 branches:
   only:
     - master
-    - /^test-integration-.*$/
-    - /^test-individual-.*$/
+    - /^integration-.*$/
+    - /^individual-.*$/
+    
+### 关闭默认git clone 代码
+git:
+  clone: false
 
-### 安装 hugegraph 组件依赖环境
+### 安装python 组件依赖环境
 before_install:
-  - java -version
-  # - sudo apt-get -yqq install software-properties-common
-  # - sudo add-apt-repository ppa:webupd8team/java
-  # - sudo apt-get -yqq update
-  # - sudo apt-get -yqq install oracle-java8-installer
-  # - sudo apt-get -yqq build-depgcc
-  - gcc --version
-# addons:
-#   apt:
-#     update: true  
+  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+  - sudo pip install -r requirements.txt
+  # - 后续添加环境
   
-# ### 安装部署 graph组件
+### git clone相关分支测试代码 && 安装部署graph组件
 install:
-  - if [ $SERVER_INSTALL != false ]; then ./server_install.sh $SERVER_INSTALL; else echo "server is not required to install..."; fi
-  - if [ $LOADER_INSTALL != false ]; then ./loader_install.sh $LOADER_INSTALL; else echo "loader is not required to install..."; fi
-  - if [ $TOOLS_INSTALL != false ]; then ./tools_install.sh $TOOLS_INSTALL; else echo "tools is not required to install..."; fi
-  - if [ $HUBBLE_INSTALL != false ]; then ./hubble_install.sh $HUBBLE_INSTALL; else echo "hubble is not required to install..."; fi
+  # - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
+  - ./graph_install.py $BRANCH_NAME
   
 ### 执行测试脚本
-script: true
+script:
+  -  ./graph_test.py $BRANCH_NAME
 
 
 
-
+# master中默认为最新的集成测试代码，各组件自动化代码默认都存储在分支上
 env:
- global:
-   # *_INSTALL=false代表不需要安装相关组件；*_INSTALL=${branch_name} 代表部署该组件的该分支的代码
-   - SERVER_INSTALL=false
-   - LOADER_INSTALL=false
-   - TOOLS_INSTALL=false
-   - HUBBLE_INSTALL=false
-   # 
-   - BRANCH_NAME=test-0.11
-   - TRAVIS_DIR=hugegraph-dist/src/assembly/travis
+ global:   
+   - BRANCH_NAME=master
     
 
