@@ -6,6 +6,12 @@ python:
 ### sudo权限
 sudo: required
 
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.cache/pip
+    - $HOME/downloads
+
 ### 过滤自动化构建的分支 
 # 总共5类分支：master、integration-LSHT-1.2_0.11_1.31_1.2、individual-loader_1.2、individual-server_0.11、individual-hubble_1.3.1、individual-tools_1.1)
 branches:
