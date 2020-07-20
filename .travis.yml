@@ -21,7 +21,7 @@ git:
 ### 安装python 组件依赖环境
 before_install:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-  - sudo pip install -r requirements.txt
+  - sudo pip install -r updateIntegration/requirements.txt
   # - 后续添加环境
   
 ### git clone相关分支测试代码 && 安装部署graph组件
