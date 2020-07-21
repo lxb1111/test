@@ -6,11 +6,12 @@ python:
 ### sudo权限
 sudo: required
 
-# cache:
-#   directories:
-#     - $HOME/.m2
-#     - $HOME/.cache/pip
-#     - $HOME/downloads
+### 内存配置
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.cache/pip
+    - $HOME/downloads
 
 ### 过滤自动化构建的分支 
 # 总共5类分支：master、integration-LSHT-1.2_0.11_1.31_1.2、individual-loader_1.2、individual-server_0.11、individual-hubble_1.3.1、individual-tools_1.1)
@@ -27,20 +28,17 @@ git:
 ### 安装python 组件依赖环境
 before_install:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-  # - sudo apt-get -y install tree
-  # - tree
-  - sudo pip install -r lxb1111/test/updateIntegration/requirements.txt
-  # - 后续添加环境
+  - cd ${TRAVIS_DIR}
+  - sudo pip install -r requirements.txt
   
 ### git clone相关分支测试代码 && 安装部署graph组件
 install:
   # - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
-  - python3 ${TRAVIS_DIR}/graph_install.py $BRANCH_NAME
+  - python3 graph_install.py $BRANCH_NAME
   
 ### 执行测试脚本
 script:
   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-
 
 # master中默认为最新的集成测试代码，各组件自动化代码默认都存储在分支上
 env:
@@ -49,3 +47,5 @@ env:
    - TRAVIS_DIR=lxb1111/test/updateIntegration
     
 
+  # - sudo apt-get -y install tree
+  # - tree
