@@ -27,6 +27,8 @@ git:
 ### 安装python 组件依赖环境
 before_install:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+  - pwd
+  - ls
   - sudo pip install -r ${TRAVIS_DIR}/requirements.txt
   # - 后续添加环境
   
@@ -44,6 +46,6 @@ script:
 env:
  global:   
    - BRANCH_NAME=master
-   - TRAVIS_DIR=updateIntegration
+   - TRAVIS_DIR=./updateIntegration
     
 
