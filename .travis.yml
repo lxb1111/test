@@ -27,8 +27,8 @@ git:
 ### 安装python 组件依赖环境
 before_install:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-  - sudo apt-get -y install tree
-  - tree
+  # - sudo apt-get -y install tree
+  # - tree
   - sudo pip install -r lxb1111/test/updateIntegration/requirements.txt
   # - 后续添加环境
   
@@ -46,6 +46,6 @@ script:
 env:
  global:   
    - BRANCH_NAME=master
-   - TRAVIS_DIR=./lxb111/test/updateIntegration
+   - TRAVIS_DIR=lxb111/test/updateIntegration
     
 
