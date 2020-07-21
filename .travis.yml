@@ -46,6 +46,6 @@ script:
 env:
  global:   
    - BRANCH_NAME=master
-   - TRAVIS_DIR=lxb111/test/updateIntegration
+   - TRAVIS_DIR=lxb1111/test/updateIntegration
     
 
