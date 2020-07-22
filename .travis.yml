@@ -3,9 +3,6 @@ language: python
 python:
   - "3.7.6" 
 
-jdk:
-  - oraclejdk8
-
 ### sudo权限
 sudo: required
 
@@ -28,11 +25,17 @@ branches:
 git:
   clone: false
 
-# ### 安装python 组件依赖环境
-# before_install:
-#   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-#   - cd ${TRAVIS_DIR}
-#   - sudo pip install -r requirements.txt
+### 安装python 组件依赖环境
+before_install:
+  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+  - cd ${TRAVIS_DIR}
+  - sudo pip install -r requirements.txt
+  - sudo apt-get update
+  #- sudo apt-get install openjdk-8-jdk
+  - sudo apt-get -y install oraclejdk8
+
+
+
   
 ### git clone相关分支测试代码 && 安装部署graph组件
 install:
