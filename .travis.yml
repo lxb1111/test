@@ -31,6 +31,7 @@ before_install:
   - cd ${TRAVIS_DIR}
   - sudo pip install -r requirements.txt
   - sudo apt-get update
+  - apt search jdk
   #- sudo apt-get install openjdk-8-jdk
   - sudo apt-get -y install oracle-java8-installer
 
