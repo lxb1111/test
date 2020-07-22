@@ -1,7 +1,10 @@
 ### 使用语言
 language: python
 python:
-  - "3.7.6"
+  - "3.7.6" 
+
+jdk:
+  - oraclejdk8
 
 ### sudo权限
 sudo: required
