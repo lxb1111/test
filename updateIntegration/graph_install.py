@@ -19,8 +19,8 @@ if __name__ == "__main__":
 
     if param_1 == 'master' or 'integration-LSHT' in param_1:
         ### start server
-        server.git_tar()
-        server.start_server()
+        # server.git_tar()
+        # server.start_server()
         # ### start loader
         graph_part_install.DeployLoader().git_tar()
         # ### start hubble

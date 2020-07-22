@@ -71,13 +71,13 @@ class DeployServer:
               'git clone -b %s %s && ' \
               'cd hugegraph/ && ' \
               'mvn clean package -DskipTests ' % (self.git_path, self.git_branch, self.git_url)
-        logger.info(cmd)
+        logger.info('\n\n\n --->'+cmd)
         subprocess.call(cmd, shell=True)
 
         server_path = self.git_path + '/hugegraph'
         graph_dir = GetFile('server', server_path)
         cmd1 = 'mv %s/%s %s' % (server_path, graph_dir, self.deploy_path)
-        logger.info(cmd1)
+        logger.info('\n\n\n --->'+cmd1)
         subprocess.call(cmd1, shell=True)
 
     def start_server(self):
@@ -93,7 +93,7 @@ class DeployServer:
               "sed -i 's/127.0.0.1:8182/%s/g' %s " \
               % (self.server_host + ':' + str(self.server_port), rest_file, rest_file,
                  self.server_host + ':' + str(self.gremlin_port), rest_file)
-        logger.info(cmd)
+        logger.info('\n\n\n --->'+cmd)
         subprocess.call(cmd, shell=True)
 
         gremlin_file = self.deploy_path + '/' + graph_dir + '/conf/gremlin-server.yaml'
@@ -101,16 +101,16 @@ class DeployServer:
                "sed -i 's/#port: 8182/port: %d' %s" \
                % (self.server_host, gremlin_file,
                   self.gremlin_port, gremlin_file)
-        logger.info(cmd1)
+        logger.info('\n\n\n --->'+cmd1)
         subprocess.call(cmd1, shell=True)
 
         ### init
         cmd2 = "%s/%s/bin/init-store.sh" % (self.deploy_path, graph_dir)
-        logger.info(cmd2)
+        logger.info('\n\n\n --->'+cmd2)
         subprocess.call(cmd2, shell=True)
         ### start
         cmd3 = "%s/%s/bin/start-hugegraph.sh" % (self.deploy_path, graph_dir)
-        logger.info(cmd3)
+        logger.info('\n\n\n --->'+cmd3)
         subprocess.call(cmd3, shell=True)
 
 
@@ -163,13 +163,13 @@ class DeployLoader:
               '-Dversion=12.2.0.1 ' \
               '-Dpackaging=jar && ' \
               'mvn clean package -DskipTests' % (self.git_path, self.git_branch, self.git_url, self.git_path)
-        logger.info(cmd)
+        logger.info('\n\n\n --->'+cmd)
         subprocess.call(cmd, shell=True)
 
         load_path = self.git_path + '/hugegraph-loader'
         graph_dir = GetFile('loader', load_path)
         cmd1 = 'mv %s/%s %s' % (load_path, graph_dir, self.deploy_path)
-        logger.info(cmd1)
+        logger.info('\n\n\n --->'+cmd1)
         subprocess.call(cmd1, shell=True)
 
 
@@ -216,13 +216,13 @@ class DeployTools:
               'git clone -b %s %s && ' \
               'cd hugegraph-tools/ && ' \
               'mvn clean package -DskipTests' % (self.git_path, self.git_branch, self.git_url)
-        logger.info(cmd)
+        logger.info('\n\n\n --->' + cmd)
         subprocess.call(cmd, shell=True)
 
         tools_path = self.git_path + '/hugegraph-tools'
         graph_dir = GetFile('tools', tools_path)
         cmd1 = 'mv %s/%s %s' % (tools_path, graph_dir, self.deploy_path)
-        logger.info(cmd1)
+        logger.info('\n\n\n --->' + cmd1)
         subprocess.call(cmd1, shell=True)
 
 
@@ -281,13 +281,13 @@ class DeployHubble:
               'git clone -b %s %s && ' \
               'cd hugegraph-hubble/ && ' \
               'mvn clean package -DskipTests' % (self.git_path, self.git_branch, self.git_url)
-        logger.info(cmd)
+        logger.info('\n\n\n --->' + cmd)
         subprocess.call(cmd, shell=True)
 
         hubble_path = self.git_path + '/hugegraph-hubble'
         graph_dir = GetFile('hubble', hubble_path)
         cmd1 = 'mv %s/%s %s' % (hubble_path, graph_dir, self.deploy_path)
-        logger.info(cmd1)
+        logger.info('\n\n\n --->' + cmd1)
         subprocess.call(cmd1, shell=True)
 
     def start_hubble(self):
@@ -301,7 +301,7 @@ class DeployHubble:
               "%s/%s/bin/start-hubble.sh" % (self.host, properties_file,
                                              self.port, properties_file,
                                              self.deploy_path, GetFile('loader', self.deploy_path))
-        logger.info(cmd)
+        logger.info('\n\n\n --->' + cmd)
         subprocess.call(cmd, shell=True)
 
 
@@ -327,64 +327,62 @@ def GetFile(file_type, file_path):
 
 
 if __name__ == "__main__":
-    # ### loader、server、tools、hubble
-    # param_1 = sys.argv[1]
-    # ### remove、start、stop
-    # param_2 = sys.argv[2]
-    #
-    # if 'server' == param_1:
-    #     if 'remove' == param_2:
-    #         DeployServer().server_remove()
-    #     elif 'stop' == param_2:
-    #         DeployServer().server_stop()
-    #     elif 'start' == param_2:
-    #         DeployServer().start_server()
-    #     elif 'get' == param_2:
-    #         if 'wget' == graph_conf.server["mode"]:
-    #             DeployServer().wget_tar()
-    #         else:  # git 方式
-    #             DeployServer().git_tar()
-    #     else:
-    #         logger.error(' the secondary param if error --- [stop, remove, start, get]')
-    #
-    # elif 'loader' == param_1:
-    #     if 'remove' == param_2:
-    #         DeployLoader().loader_remove()
-    #     elif 'get' == param_2:
-    #         if 'wget' == graph_conf.loader["mode"]:
-    #             DeployLoader().wget_tar()
-    #         else:  # git方式
-    #             DeployLoader().git_tar()
-    #     else:
-    #         logger.error(' the secondary param if error --- [remove, package]')
-    #
-    # elif 'tools' == param_1:
-    #     if 'remove' == param_2:
-    #         DeployTools().tools_remove()
-    #     elif 'get' == param_2:
-    #         if 'wget' == graph_conf.tools['mode']:
-    #             DeployTools().wget_tar()
-    #         else:  # git方式
-    #             DeployTools().git_tar()
-    #     else:
-    #         logger.error(' the secondary param if error --- [remove, package]')
-    #
-    # elif 'hubble' == param_1:
-    #     if 'remove' == param_2:
-    #         DeployHubble().hubble_remove()
-    #     elif 'stop' == param_2:
-    #         DeployHubble().hubble_stop()
-    #     elif 'get' == param_2:
-    #         if 'wget' == graph_conf.hubble['mode']:
-    #             DeployHubble().wget_tar()
-    #         else:  # git 方式
-    #             DeployHubble().git_tar()
-    #     elif 'start' == param_2:
-    #         DeployHubble().start_hubble()
-    #     else:
-    #         logger.error(' the secondary param is error --- [remove, start, stop, package]')
-    #
-    # else:
-    #     logger.error(' the first param is error --- [server, loader, tools, hubble]')
+    ### loader、server、tools、hubble
+    param_1 = sys.argv[1]
+    ### remove、start、stop
+    param_2 = sys.argv[2]
 
-    print(GetFile('server', project_path.git_graph()+'/hugegraph'))
+    if 'server' == param_1:
+        if 'remove' == param_2:
+            DeployServer().server_remove()
+        elif 'stop' == param_2:
+            DeployServer().server_stop()
+        elif 'start' == param_2:
+            DeployServer().start_server()
+        elif 'get' == param_2:
+            if 'wget' == graph_conf.server["mode"]:
+                DeployServer().wget_tar()
+            else:  # git 方式
+                DeployServer().git_tar()
+        else:
+            logger.error(' the secondary param if error --- [stop, remove, start, get]')
+
+    elif 'loader' == param_1:
+        if 'remove' == param_2:
+            DeployLoader().loader_remove()
+        elif 'get' == param_2:
+            if 'wget' == graph_conf.loader["mode"]:
+                DeployLoader().wget_tar()
+            else:  # git方式
+                DeployLoader().git_tar()
+        else:
+            logger.error(' the secondary param if error --- [remove, package]')
+
+    elif 'tools' == param_1:
+        if 'remove' == param_2:
+            DeployTools().tools_remove()
+        elif 'get' == param_2:
+            if 'wget' == graph_conf.tools['mode']:
+                DeployTools().wget_tar()
+            else:  # git方式
+                DeployTools().git_tar()
+        else:
+            logger.error(' the secondary param if error --- [remove, package]')
+
+    elif 'hubble' == param_1:
+        if 'remove' == param_2:
+            DeployHubble().hubble_remove()
+        elif 'stop' == param_2:
+            DeployHubble().hubble_stop()
+        elif 'get' == param_2:
+            if 'wget' == graph_conf.hubble['mode']:
+                DeployHubble().wget_tar()
+            else:  # git 方式
+                DeployHubble().git_tar()
+        elif 'start' == param_2:
+            DeployHubble().start_hubble()
+        else:
+            logger.error(' the secondary param is error --- [remove, start, stop, package]')
+
+    else:
+        logger.error(' the first param is error --- [server, loader, tools, hubble]')

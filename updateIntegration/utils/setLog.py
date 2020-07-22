@@ -22,7 +22,7 @@ def basic_log(file_path):
     logger.addHandler(handler)
     ### warn级的log打印设置
     console = logging.StreamHandler()
-    console.setLevel(logging.ERROR)
+    console.setLevel(logging.INFO)
     logger.addHandler(console)
     return logger
 
