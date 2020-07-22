@@ -21,12 +21,12 @@ if __name__ == "__main__":
         ### start server
         server.git_tar()
         server.start_server()
-        ### start loader
+        # ### start loader
         graph_part_install.DeployLoader().git_tar()
-        ### start hubble
+        # ### start hubble
         hubble.git_tar()
         hubble.start_hubble()
-        ### start tools
+        # ### start tools
         graph_part_install.DeployTools().git_tar()
     elif 'individual-loader' in param_1:
         ### start server
