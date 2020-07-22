@@ -5,6 +5,7 @@ python:
 
 jdk:
   - oraclejdk8
+dist: trusty
 
 ### sudo权限
 sudo: required
@@ -40,7 +41,7 @@ install:
   #   - python3 graph_install.py $BRANCH_NAME
   #   - sudo apt-get -y install tree
   #   - tree
-  
+  - java -version
   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
   - cd hugegraph/ && mvn compile -Dmaven.javadoc.skip=true | grep -v "Downloading\|Downloaded"
   
