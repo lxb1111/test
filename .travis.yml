@@ -35,6 +35,9 @@ before_install:
 install:
   # - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
   - python3 graph_install.py $BRANCH_NAME
+  - sudo apt-get -y install tree
+  - tree
+  
   
 ### 执行测试脚本
 script:
@@ -46,6 +49,3 @@ env:
    - BRANCH_NAME=master
    - TRAVIS_DIR=lxb1111/test/updateIntegration
     
-
-  # - sudo apt-get -y install tree
-  # - tree
