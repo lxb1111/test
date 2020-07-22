@@ -19,15 +19,15 @@ if __name__ == "__main__":
 
     if param_1 == 'master' or 'integration-LSHT' in param_1:
         ### start server
-        # server.git_tar()
-        # server.start_server()
+        server.git_tar()
+        server.start_server()
         # ### start loader
-        graph_part_install.DeployLoader().git_tar()
+        # graph_part_install.DeployLoader().git_tar()
         # ### start hubble
-        hubble.git_tar()
-        hubble.start_hubble()
+        # hubble.git_tar()
+        # hubble.start_hubble()
         # ### start tools
-        graph_part_install.DeployTools().git_tar()
+        # graph_part_install.DeployTools().git_tar()
     elif 'individual-loader' in param_1:
         ### start server
         server.git_tar()
