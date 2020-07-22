@@ -25,23 +25,25 @@ branches:
 git:
   clone: false
 
-### 安装python 组件依赖环境
-before_install:
-  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-  - cd ${TRAVIS_DIR}
-  - sudo pip install -r requirements.txt
+# ### 安装python 组件依赖环境
+# before_install:
+#   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+#   - cd ${TRAVIS_DIR}
+#   - sudo pip install -r requirements.txt
   
 ### git clone相关分支测试代码 && 安装部署graph组件
 install:
-  # - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
-  - python3 graph_install.py $BRANCH_NAME
-  - sudo apt-get -y install tree
-  - tree
+  #   - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
+  #   - python3 graph_install.py $BRANCH_NAME
+  #   - sudo apt-get -y install tree
+  #   - tree
+  - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
+  - cd hugegraph/ && mvn clean package -DskipTests
   
   
-### 执行测试脚本
-script:
-  - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+# ### 执行测试脚本
+# script:
+#   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
 
 # master中默认为最新的集成测试代码，各组件自动化代码默认都存储在分支上
 env:
