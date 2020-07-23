@@ -6,6 +6,8 @@ language: java
 
 jdk:
   - oraclejdk8
+  
+dist: trusty
 
 ### sudo权限
 sudo: required
@@ -34,11 +36,11 @@ before_install:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
   - cd ${TRAVIS_DIR}
 #   - sudo pip install -r requirements.txt
-  - sudo apt-get update
-  - apt search jdk
-  - sudo apt-get remove openjdk*
+#   - sudo apt-get update
+#   - apt search jdk
+#   - sudo apt-get remove openjdk*
   - java -version
-  - sudo apt-get -y install openjdk-8-jdk
+#   - sudo apt-get -y install openjdk-8-jdk
 
 
 
