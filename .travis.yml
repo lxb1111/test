@@ -37,7 +37,7 @@ before_install:
 
 ### 编译 && 安装 graph组件
 install:
-  - python3 --version
+  - java -version
   - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
 #   - ${TRAVIS_DIR}/graph_install.sh $BRANCH_NAME
   
@@ -48,7 +48,7 @@ jobs:
       python: 3.7.6
       before_script:
       - python3 --version
-      - ls
+      - java -version
       - sudo apt-get -y install tree
       - tree
 #       - sudo pip install -r requirements.txt
