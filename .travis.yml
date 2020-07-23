@@ -36,25 +36,29 @@ before_install:
   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
 
 ### 编译 && 安装 graph组件
-install:  
-  - cd hugegraph/ && mvn clean package -DskipTests | grep -v "Downloading\|Downloaded"
+install:
+  - python3 --version
   - sudo apt-get -y install tree
   - tree
+  - cd hugegraph/ && mvn clean package -DskipTests | grep -v "Downloading\|Downloaded"
+  - ls
+  - tree
+  
 #   - ${TRAVIS_DIR}/graph_install.sh $BRANCH_NAME
   
-### 使用python进行测试
-jobs:
-  include:
-    - language: python
-      python: 3.7
-      before_install:
-      - python3 --version
-#       - sudo apt-get -y install tree
-      - tree
-      - sudo pip install -r requirements.txt
-      script:
-#       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-      - true
+# ### 使用python进行测试
+# jobs:
+#   include:
+#     - language: python
+#       python: 3.7
+#       before_install:
+#       - python3 --version
+# #       - sudo apt-get -y install tree
+#       - tree
+#       - sudo pip install -r requirements.txt
+#       script:
+# #       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+#       - true
       
 # 环境变量的设置
 env:
