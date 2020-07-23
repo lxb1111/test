@@ -35,7 +35,7 @@ git:
 before_install:
   - sudo apt-get -y install openjdk-8-jdk
   - sudo update-alternatives --list java
-  - sudo update-alternatives --config java
+  - sudo update-alternatives --config /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
   - java -version
 #   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
 #   - ${TRAVIS_DIR}/graph_git.sh $BRANCH_NAME
