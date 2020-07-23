@@ -32,7 +32,7 @@ git:
 before_install:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
 #   - ${TRAVIS_DIR}/graph_git.sh $BRANCH_NAME
-  - cd ${TRAVIS_DIR}/testEnv
+  - cd ${TRAVIS_DIR}/updateIntegration && mkdir testEnv && cd testEnv/
   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
 
 ### 编译 && 安装 graph组件
