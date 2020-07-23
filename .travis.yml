@@ -1,6 +1,6 @@
 ### 使用语言
 language: python
-- "3.7.6" 
+- 3.7.6 
 # language: java
 
 # jdk:
@@ -33,6 +33,7 @@ git:
 ### 拉取测试代码 和 graph代码
 before_install:
   - sudo apt-get -y install openjdk-8-jdk
+  - - java -version
 #   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
 #   - ${TRAVIS_DIR}/graph_git.sh $BRANCH_NAME
 #   - cd ${TRAVIS_DIR} && mkdir testEnv && cd testEnv/
@@ -59,9 +60,9 @@ before_install:
 # #       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
 #       - echo 'running script ...'
       
-after_script:
-  - java -version
-  - echo '使用 jdk8环境进行操作...'
+# after_script:
+#   - java -version
+#   - echo '使用 jdk8环境进行操作...'
       
 # 环境变量的设置
 env:
