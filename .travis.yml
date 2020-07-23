@@ -32,7 +32,8 @@ before_install:
   - sudo pip install -r requirements.txt
   - sudo apt-get update
   - apt search jdk
-  - sudo apt-get autoremove default-jdk
+  - sudo apt-get remove openjdk*
+  - java -version
   - sudo apt-get -y install openjdk-8-source
 
 
