@@ -1,8 +1,10 @@
 ### 使用语言
-language: java
+language: python
+- "3.7.6" 
+# language: java
 
-jdk:
-  - oraclejdk8
+# jdk:
+#   - oraclejdk8
   
 # dist: trusty
 
@@ -30,31 +32,32 @@ git:
 
 ### 拉取测试代码 和 graph代码
 before_install:
-  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+  - sudo apt-get -y install openjdk-8-jdk
+#   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
 #   - ${TRAVIS_DIR}/graph_git.sh $BRANCH_NAME
-  - cd ${TRAVIS_DIR} && mkdir testEnv && cd testEnv/
-  - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
+#   - cd ${TRAVIS_DIR} && mkdir testEnv && cd testEnv/
+#   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
 
 ### 编译 && 安装 graph组件
-install:
-  - java -version
-  - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
+# install:
+#   - java -version
+#   - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
 #   - ${TRAVIS_DIR}/graph_install.sh $BRANCH_NAME
   
 # ### 使用python进行测试
-jobs:
-  include:
-    - language: python
-      python: 3.7.6
-      before_script:
-      - python3 --version
-      - java -version
-      - sudo apt-get -y install tree
-      - tree
-#       - sudo pip install -r requirements.txt
-      script:
-#       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-      - echo 'running script ...'
+# jobs:
+#   include:
+#     - language: python
+#       python: 3.7.6
+#       before_script:
+#       - python3 --version
+#       - java -version
+#       - sudo apt-get -y install tree
+#       - tree
+# #       - sudo pip install -r requirements.txt
+#       script:
+# #       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+#       - echo 'running script ...'
       
 after_script:
   - java -version
