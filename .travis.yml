@@ -46,7 +46,7 @@ jobs:
   include:
     - language: python
       python: 3.7.6
-      before_install:
+      before_script:
       - python3 --version
       - ls
       - sudo apt-get -y install tree
@@ -54,7 +54,7 @@ jobs:
 #       - sudo pip install -r requirements.txt
       script:
 #       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-      - true
+      - echo 'running script ...'
       
 # 环境变量的设置
 env:
