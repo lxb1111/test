@@ -4,7 +4,7 @@ language: java
 jdk:
   - oraclejdk8
   
-dist: trusty
+# dist: trusty
 
 ### sudo权限
 sudo: required
@@ -38,27 +38,23 @@ before_install:
 ### 编译 && 安装 graph组件
 install:
   - python3 --version
-  - sudo apt-get -y install tree
-  - tree
-  - cd hugegraph/ && mvn clean package -DskipTests | grep -v "Downloading\|Downloaded"
-  - ls
-  - tree
-  
+  - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
 #   - ${TRAVIS_DIR}/graph_install.sh $BRANCH_NAME
   
 # ### 使用python进行测试
-# jobs:
-#   include:
-#     - language: python
-#       python: 3.7
-#       before_install:
-#       - python3 --version
-# #       - sudo apt-get -y install tree
-#       - tree
-#       - sudo pip install -r requirements.txt
-#       script:
-# #       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-#       - true
+jobs:
+  include:
+    - language: python
+      python: 3.7.6
+      before_install:
+      - python3 --version
+      - ls
+      - sudo apt-get -y install tree
+      - tree
+      - sudo pip install -r requirements.txt
+      script:
+#       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+      - true
       
 # 环境变量的设置
 env:
