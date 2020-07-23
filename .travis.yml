@@ -5,9 +5,11 @@
 language: java
 
 jdk:
-  - oraclejdk8
-  
+  - oraclejdk8 
 dist: trusty
+
+python:
+  - "3.7.6"
 
 ### sudo权限
 sudo: required
@@ -39,7 +41,6 @@ before_install:
 #   - sudo apt-get update
 #   - apt search jdk
 #   - sudo apt-get remove openjdk*
-  - java -version
 #   - sudo apt-get -y install openjdk-8-jdk
 
 
@@ -53,7 +54,7 @@ install:
   #   - tree
   - java -version
   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
-  - cd hugegraph/ && mvn compile -Dmaven.javadoc.skip=true | grep -v "Downloading\|Downloaded"
+  - cd hugegraph/ && mvn clean package -DskipTests | grep -v "Downloading\|Downloaded"
   
   
 # ### 执行测试脚本
