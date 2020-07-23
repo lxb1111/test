@@ -52,9 +52,12 @@ install:
   #   - python3 graph_install.py $BRANCH_NAME
   #   - sudo apt-get -y install tree
   #   - tree
+  - python --version
+  - python --version
   - java -version
   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
   - cd hugegraph/ && mvn clean package -DskipTests | grep -v "Downloading\|Downloaded"
+  - ls
   
   
 # ### 执行测试脚本
