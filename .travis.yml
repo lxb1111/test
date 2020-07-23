@@ -1,15 +1,10 @@
 ### 使用语言
-# language: python
-# python:
-#   - "3.7.6" 
 language: java
 
 jdk:
-  - oraclejdk8 
+  - oraclejdk8
+  
 dist: trusty
-
-python:
-  - "3.7.6"
 
 ### sudo权限
 sudo: required
@@ -33,40 +28,66 @@ branches:
 git:
   clone: false
 
-### 安装python 组件依赖环境
+### 拉取测试代码 和 graph代码
 before_install:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-  - cd ${TRAVIS_DIR}
-#   - sudo pip install -r requirements.txt
-#   - sudo apt-get update
-#   - apt search jdk
-#   - sudo apt-get remove openjdk*
-#   - sudo apt-get -y install openjdk-8-jdk
-
-
-
-  
-### git clone相关分支测试代码 && 安装部署graph组件
-install:
-  #   - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
-  #   - python3 graph_install.py $BRANCH_NAME
-  #   - sudo apt-get -y install tree
-  #   - tree
-  - python --version
-  - python --version
-  - java -version
+#   - ${TRAVIS_DIR}/graph_git.sh $BRANCH_NAME
+  - cd ${TRAVIS_DIR}/testEnv
   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
-  - cd hugegraph/ && mvn clean package -DskipTests | grep -v "Downloading\|Downloaded"
-  - ls
-  
-  
-# ### 执行测试脚本
-# script:
-#   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
 
-# master中默认为最新的集成测试代码，各组件自动化代码默认都存储在分支上
+### 编译 && 安装 graph组件
+install:  
+  - cd hugegraph/ && mvn clean package -DskipTests | grep -v "Downloading\|Downloaded"
+  - sudo apt-get -y install tree
+  - tree
+#   - ${TRAVIS_DIR}/graph_install.sh $BRANCH_NAME
+  
+### 使用python进行测试
+jobs:
+  include:
+    - language: python
+      python: 3.7.6
+      before_install:
+      - python3 --version
+#       - sudo apt-get -y install tree
+      - tree
+      - sudo pip install -r requirements.txt
+      script:
+#       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+      - ${TRAVIS_DIR}/
+      
+# 环境变量的设置
 env:
  global:   
    - BRANCH_NAME=master
    - TRAVIS_DIR=lxb1111/test/updateIntegration
     
+
+
+
+
+
+# ### 执行测试脚本
+# script:
+#   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+
+#   - sudo apt-get update
+#   - apt search jdk
+#   - sudo apt-get remove openjdk*
+#   - sudo apt-get -y install openjdk-8-jdk
+
+# language: python
+# python:
+#   - "3.7.6" 
+
+#   - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
+#   - python3 graph_install.py $BRANCH_NAME
+#   - sudo apt-get -y install tree
+#   - tree
+
+# ### 拉取python测试代码 && 安装python依赖包
+# before_install:
+#   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+#   - cd ${TRAVIS_DIR}
+#   - sudo pip install -r requirements.txt
+#   - python3 --version
