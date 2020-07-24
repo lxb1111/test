@@ -61,7 +61,7 @@ install:
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
       ls
     fi
-  - cd .. 
+  - cd ..
 
 ### 拉取测试代码、安装依赖包
 before_script:
