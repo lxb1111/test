@@ -61,13 +61,12 @@ install:
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
       ls
     fi
-  - cd ..
 
 ### 拉取测试代码、安装依赖包
 before_script:
   - python3 --version
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-  - cd lxb1111/test/updateIntegration && sudo pip install -r requirements.txt
+  - cd ../lxb1111/test/updateIntegration && sudo pip install -r requirements.txt
 
 script:
 #   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
