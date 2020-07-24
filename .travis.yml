@@ -24,24 +24,6 @@ branches:
 ### 关闭默认git clone 代码
 git:
   clone: false
-  
-# before_install:
-#   - |
-#     if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then
-#       echo '--- test-if-then-fi-1'
-#     fi
-#   - |
-#     if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "tools" ]; then
-#       echo '--- test-if-then-fi-2'
-#     fi
-  
-# script:
-#   - true
-
-# env:
-#  global:
-#   - TEST_TYPE=integration-LSHT
-
 
 ### 拉取graph代码
 before_install:
@@ -62,23 +44,27 @@ before_install:
 ### 编译、安装 graph组件
 install:
   - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
+  - ls
   - |
     if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
       cd ../hugegraph-loader/ 
       mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar 
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+      ls
     fi
   - |
     if [ "$TEST_TYPE" == "individual-tools" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
       cd ../hugegraph-tools/ 
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+      ls
     fi
   - |
     if [ "$TEST_TYPE" == "individual-hubble" or "$TEST_TYPE" == "integration-LSHT" ]; then 
       cd ../hugegraph-hubble/ 
-      mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+      mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
+      ls
     fi
-  - cd ..
+  - cd .. && ls
 
 ### 拉取测试代码、安装依赖包
 before_script:
