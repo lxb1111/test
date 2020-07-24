@@ -27,7 +27,7 @@ git:
   
 before_install:
   - |
-    if [ $TEST_TYPE == integration-LSHT ]; then
+    if [ $TEST_TYPE == individual-loader -o $TEST_TYPE == integration-LSHT]; then
       echo '--- test-if-then-fi-1'
     fi
   - |
