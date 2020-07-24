@@ -4,10 +4,7 @@ python:
   - "3.7.6"
 # language: java
 
-addons:
-  apt:
-    packages:
-      - oracle-java8-set-default
+
 
 # jdk:
 #   - oraclejdk8
@@ -16,6 +13,15 @@ addons:
 
 ### sudo权限
 sudo: required
+
+addons:
+  apt:
+  - sudo add-apt-repository -y ppa:webupd8team/java
+  - sudo apt-get update
+  - sudo apt-get install -y oracle-java8-installer
+  
+#     packages:
+#       - oracle-java8-set-default
 
 ### 内存配置
 cache:
