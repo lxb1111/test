@@ -14,6 +14,14 @@ python:
 ### sudo权限
 sudo: required
 
+addons:
+  apt:
+    sources:
+      - elasticsearch-5.x
+    packages:
+      - elasticsearch
+      - oracle-java8-set-default
+      - openjdk-8-jre-headless
 
 
 #     packages:
