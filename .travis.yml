@@ -1,33 +1,12 @@
-### 使用语言
-language: python
-python:
-  - "3.7.6"
-# language: java
+language: java
 
+jdk:
+  - oraclejdk8
 
+dist: trusty
 
-# jdk:
-#   - oraclejdk8
-  
-# dist: trusty
-
-### sudo权限
 sudo: required
 
-addons:
-  apt:
-    sources:
-      - elasticsearch-5.x
-    packages:
-      - elasticsearch
-      - oracle-java8-set-default
-      - openjdk-8-jre-headless
-
-
-#     packages:
-#       - openjdk-8-jdk
-
-### 内存配置
 cache:
   directories:
     - $HOME/.m2
@@ -48,74 +27,35 @@ git:
 
 ### 拉取测试代码 和 graph代码
 before_install:
-#   - sudo apt-get -y install openjdk-8-jdk
-#   - sudo update-alternatives --list java
-#   - sudo update-alternatives --config /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-  - java -version
-  - python3 --version
-#   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
 #   - ${TRAVIS_DIR}/graph_git.sh $BRANCH_NAME
 #   - cd ${TRAVIS_DIR} && mkdir testEnv && cd testEnv/
-#   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
+  - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
 
-### 编译 && 安装 graph组件
+### 编译、安装 graph组件
 install:
-  - true
-#   - java -version
-#   - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
+  - java -version
+  - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
 #   - ${TRAVIS_DIR}/graph_install.sh $BRANCH_NAME
   
-# ### 使用python进行测试
-# jobs:
-#   include:
-#     - language: python
-#       python: 3.7.6
-#       before_script:
-#       - python3 --version
-#       - java -version
-#       - sudo apt-get -y install tree
-#       - tree
-# #       - sudo pip install -r requirements.txt
-#       script:
-# #       - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-#       - echo 'running script ...'
-      
-# after_script:
-#   - java -version
-#   - echo '使用 jdk8环境进行操作...'
+before_script:
+  - python3 --version
+  - cd ${TRAVIS_DIR}
+  - sudo pip install -r requirements.txt
+
+script:
+#   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+  - echo 'script...'
+  - true
+
+after_script:
+  - echo 'after_script...'
+
+after_success:
+  - echo 'after_success...'
       
 # 环境变量的设置
 env:
  global:   
    - BRANCH_NAME=master
    - TRAVIS_DIR=lxb1111/test/updateIntegration
-    
-
-
-
-
-
-# ### 执行测试脚本
-# script:
-#   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-
-#   - sudo apt-get update
-#   - apt search jdk
-#   - sudo apt-get remove openjdk*
-#   - sudo apt-get -y install openjdk-8-jdk
-
-# language: python
-# python:
-#   - "3.7.6" 
-
-#   - if [ $BRANCH_NAME = default ]; then ./graph_install.sh $GRAPH_INSTALL; else echo "graph is not required to install..."; fi
-#   - python3 graph_install.py $BRANCH_NAME
-#   - sudo apt-get -y install tree
-#   - tree
-
-# ### 拉取python测试代码 && 安装python依赖包
-# before_install:
-#   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-#   - cd ${TRAVIS_DIR}
-#   - sudo pip install -r requirements.txt
-#   - python3 --version
