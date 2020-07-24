@@ -44,19 +44,16 @@ before_install:
 ### 编译、安装 graph组件
 install:
   - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
-  - ls
   - |
     if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
       cd ../hugegraph-loader/ 
       mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar 
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
-      ls
     fi
   - |
     if [ "$TEST_TYPE" == "individual-tools" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
       cd ../hugegraph-tools/ 
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
-      ls
     fi
   - |
     if [ "$TEST_TYPE" == "individual-hubble" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
@@ -64,7 +61,7 @@ install:
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
       ls
     fi
-  - cd .. && ls
+  - cd .. 
 
 ### 拉取测试代码、安装依赖包
 before_script:
@@ -89,7 +86,7 @@ env:
   - BRANCH_SERVER=release-0.11
   - BRANCH_LOADER=release-0.10.1
   - BRANCH_TOOLS=release-1.4.0
-  - BRANCH_HUBBLE=master
+  - BRANCH_HUBBLE=v1.2
 ### 测试代码分支   
   - BRANCH_NAME=master
 ### 5类测试类型：integration-LSHT、individual-loader、individual-server、individual-hubble、individual-tools
