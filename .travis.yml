@@ -18,7 +18,7 @@ addons:
   apt:
   - sudo add-apt-repository -y ppa:webupd8team/java
   - sudo apt-get update
-  - sudo apt-get install -y oracle-java8-installer
+  - sudo apt-get -y install openjdk-8-jdk
   
 #     packages:
 #       - oracle-java8-set-default
