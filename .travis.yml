@@ -25,86 +25,86 @@ branches:
 git:
   clone: false
   
-before_install:
-  - |
-    if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then
-      echo '--- test-if-then-fi-1'
-    fi
-  - |
-    if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "tools" ]; then
-      echo '--- test-if-then-fi-2'
-    fi
-  
-script:
-  - true
-
-env:
- global:
-  - TEST_TYPE=integration-LSHT
-
-
-# ### 拉取graph代码
 # before_install:
-#   - git clone -b ${BRANCH_SERVER} https://github.com/hugegraph/hugegraph.git
 #   - |
-#     if [ $TEST_TYPE = individual-loader || $TEST_TYPE = integration-LSHT ]; then 
-#       git clone -b ${BRANCH_LOADER} https://github.com/hugegraph/hugegraph-loader.git
+#     if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then
+#       echo '--- test-if-then-fi-1'
 #     fi
 #   - |
-#     if [ $TEST_TYPE = individual-tools || $TEST_TYPE = integration-LSHT ]; then 
-#       git clone -b ${BRANCH_TOOLS} https://github.com/hugegraph/hugegraph-tools.git
+#     if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "tools" ]; then
+#       echo '--- test-if-then-fi-2'
 #     fi
-#   - |
-#     if [ $TEST_TYPE = individual-hubble || $TEST_TYPE = integration-LSHT ]; then 
-#       git clone -b ${BRANCH_HUBBLE} https://github.com/hugegraph/hugegraph-hubble.git
-#     fi
-
-# ### 编译、安装 graph组件
-# install:
-#   - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
-#   - |
-#     if [ $TEST_TYPE = individual-loader || $TEST_TYPE = integration-LSHT ]; then 
-#       cd ../hugegraph-loader/ 
-#       mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar 
-#       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
-#     fi
-#   - |
-#     if [ $TEST_TYPE = individual-tools || $TEST_TYPE = integration-LSHT ]; then 
-#       cd ../hugegraph-tools/ 
-#       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
-#     fi
-#   - |
-#     if [ $TEST_TYPE = individual-hubble || $TEST_TYPE = integration-LSHT ]; then 
-#       cd ../hugegraph-hubble/ 
-#       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
-#     fi
-#   - cd ..
-
-# ### 拉取测试代码、安装依赖包
-# before_script:
-#   - python3 --version
-#   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-#   - cd lxb1111/test/updateIntegration && sudo pip install -r requirements.txt
-
+  
 # script:
-# #   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-#   - echo 'script...'
 #   - true
 
-# after_script:
-#   - echo 'after_script...'
-
-# after_success:
-#   - echo 'after_success...'
-      
-# # 环境变量的设置
 # env:
 #  global:
-#   - BRANCH_SERVER=release-0.11
-#   - BRANCH_LOADER=release-0.10.1
-#   - BRANCH_TOOLS=release-1.4.0
-#   - BRANCH_HUBBLE=master
-# ### 测试代码分支   
-#   - BRANCH_NAME=master
-# ### 5类测试类型：integration-LSHT、individual-loader、individual-server、individual-hubble、individual-tools
 #   - TEST_TYPE=integration-LSHT
+
+
+### 拉取graph代码
+before_install:
+  - git clone -b ${BRANCH_SERVER} https://github.com/hugegraph/hugegraph.git
+  - |
+    if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
+      git clone -b ${BRANCH_LOADER} https://github.com/hugegraph/hugegraph-loader.git
+    fi
+  - |
+    if [ "$TEST_TYPE" == "individual-tools" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
+      git clone -b ${BRANCH_TOOLS} https://github.com/hugegraph/hugegraph-tools.git
+    fi
+  - |
+    if [ "$TEST_TYPE" == "individual-hubble" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
+      git clone -b ${BRANCH_HUBBLE} https://github.com/hugegraph/hugegraph-hubble.git
+    fi
+
+### 编译、安装 graph组件
+install:
+  - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
+  - |
+    if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
+      cd ../hugegraph-loader/ 
+      mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar 
+      mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+    fi
+  - |
+    if [ "$TEST_TYPE" == "individual-tools" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
+      cd ../hugegraph-tools/ 
+      mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+    fi
+  - |
+    if [ "$TEST_TYPE" == "individual-hubble" or "$TEST_TYPE" == "integration-LSHT" ]; then 
+      cd ../hugegraph-hubble/ 
+      mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+    fi
+  - cd ..
+
+### 拉取测试代码、安装依赖包
+before_script:
+  - python3 --version
+  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+  - cd lxb1111/test/updateIntegration && sudo pip install -r requirements.txt
+
+script:
+#   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
+  - echo 'script...'
+  - true
+
+after_script:
+  - echo 'after_script...'
+
+after_success:
+  - echo 'after_success...'
+      
+# 环境变量的设置
+env:
+ global:
+  - BRANCH_SERVER=release-0.11
+  - BRANCH_LOADER=release-0.10.1
+  - BRANCH_TOOLS=release-1.4.0
+  - BRANCH_HUBBLE=master
+### 测试代码分支   
+  - BRANCH_NAME=master
+### 5类测试类型：integration-LSHT、individual-loader、individual-server、individual-hubble、individual-tools
+  - TEST_TYPE=integration-LSHT
