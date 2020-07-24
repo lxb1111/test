@@ -14,13 +14,7 @@ python:
 ### sudo权限
 sudo: required
 
-addons:
-  - java -version
-  - sudo add-apt-repository -y ppa:webupd8team/java
-  - sudo apt-get update
-  - apt search jdk
-  - sudo apt-get -y install openjdk-8-jdk
-  - java -version
+
 
 #     packages:
 #       - openjdk-8-jdk
@@ -57,7 +51,8 @@ before_install:
 #   - git clone -b release-0.11 https://github.com/hugegraph/hugegraph.git
 
 ### 编译 && 安装 graph组件
-# install:
+install:
+  - true
 #   - java -version
 #   - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
 #   - ${TRAVIS_DIR}/graph_install.sh $BRANCH_NAME
