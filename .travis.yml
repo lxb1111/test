@@ -27,12 +27,12 @@ git:
   
 before_install:
   - |
-    if [ $TEST_TYPE == individual-loader || $TEST_TYPE == integration-LSHT ]; then
-      echo 'test-if-then-fi-1'
+    if [ $TEST_TYPE == integration-LSHT ]; then
+      echo '--- test-if-then-fi-1'
     fi
   - |
     if [ $TEST_TYPE == individual-loader || $TEST_TYPE == tools ]; then
-      echo 'test-if-then-fi-2'
+      echo '--- test-if-then-fi-2'
     fi
   
 script:
