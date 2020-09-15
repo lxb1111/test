@@ -69,6 +69,7 @@ before_script:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
   - cd ../lxb1111/test/IntegrationTest && sudo pip install -r requirements.txt
   - cd .. && ls
+  - echo '--------------'
   - echo '成功启功graph测试相关组件...'
     
 
