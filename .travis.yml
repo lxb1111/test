@@ -40,7 +40,7 @@ before_install:
     if [ "$TEST_TYPE" == "individual-hubble" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
       git clone -b ${BRANCH_HUBBLE} https://github.com/hugegraph/hugegraph-hubble.git
     fi
-  - echo '成功拉取graph代码...'
+  - ls && echo '成功拉取graph代码...'
 
 ### 编译graph组件
 install:
@@ -62,14 +62,13 @@ install:
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
       ls
     fi
-  - echo '成功编译graph组件...'
+  - cd .. && ls && echo '成功编译graph组件...'
 
 ### 拉取指定分支的测试代码、安装依赖包、启动graph组件
 before_script:
   - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
   - cd ../lxb1111/test/IntegrationTest && sudo pip install -r requirements.txt
-  - cd ..
-  - ls
+  - cd .. && ls
   - echo '成功启功graph测试相关组件...'
     
 
