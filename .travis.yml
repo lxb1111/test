@@ -49,11 +49,13 @@ install:
       cd ../hugegraph-loader/ 
       mvn install:install-file -Dfile=./assembly/static/lib/ojdbc8-12.2.0.1.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar 
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+      ls
     fi
   - |
     if [ "$TEST_TYPE" == "individual-tools" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
       cd ../hugegraph-tools/ 
-      mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" 
+      mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded"
+      ls
     fi
   - |
     if [ "$TEST_TYPE" == "individual-hubble" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
