@@ -90,7 +90,7 @@ env:
   - BRANCH_SERVER=release-0.11
   - BRANCH_LOADER=release-0.10.1
   - BRANCH_TOOLS=release-1.4.0
-  - BRANCH_HUBBLE=v1.2
+  - BRANCH_HUBBLE=master
 ### 测试代码分支   
   - BRANCH_NAME=master
 ### 5类测试类型：integration-LSHT、individual-loader、individual-server、individual-hubble、individual-tools
