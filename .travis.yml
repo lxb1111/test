@@ -44,7 +44,7 @@ before_install:
 
 ### 编译graph组件
 install:
-  - cd hugegraph/ && mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" && ls
+  - cd hugegraph/ && mvn clean package -Dmaven.graphTest.skip=true | grep -v "Downloading\|Downloaded" && ls
   - |
     if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then 
       cd ../hugegraph-loader/ 
@@ -61,24 +61,52 @@ install:
       cd ../hugegraph-hubble/ 
       mvn clean package -Dmaven.test.skip=true | grep -v "Downloading\|Downloaded" && ls
     fi
-  - cd .. && echo 'compile_code is succeed...' 
+  - cd .. && echo 'compile_code is succeed...'
 
 ### 拉取指定分支的测试代码、安装依赖包、启动graph组件
 before_script:
-  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
-  - cd lxb1111/test/IntegrationTest && sudo pip install -r requirements.txt
-  - cd .. && ls
+  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/graphTest.git lxb1111/graphTest
+  - cd lxb1111/graphTest/IntegrationTest && sudo pip install -r requirements.txt
+  ### 启动 server
+  - cd ../../../ && scp -rf lxb1111/graphTest/IntegrationTest/config/hugegraph.properties hugegraph/hugegraph-0.11.1/conf/
+  - ./hugegraph/hugegraph-0.11.1/bin/init-store.sh && ./hugegraph/hugegraph-0.11.1/bin/start-hugegraph.sh
+  ### 启动 hubble
+  - |
+    if [ "$TEST_TYPE" == "individual-hubble" -o "$TEST_TYPE" == "integration-LSHT" ]; then
+      echo './hugegraph-hubble/hugegraph-hubble-1.1.0/bin/start-hublle'
+    fi
   - echo 'git_clone_testCode && graph_start is succeed...'
     
-
+### 执行测试脚本
 script:
-#   - python3 ${TRAVIS_DIR}/graph_test.py $BRANCH_NAME
-  - echo 'script...'
-  - true
+  - cd lxb1111/graphTest/IntegrationTest/graphTest
+  ### server
+  - |
+    if [ "$TEST_TYPE" == "individual-server" -o "$TEST_TYPE" == "integration-LSHT" ]; then
+      python3 ./serverTest/basicAPI.py
+      echo 'server_test is starting ...'
+    fi
+  ### loader
+  - |
+    if [ "$TEST_TYPE" == "individual-loader" -o "$TEST_TYPE" == "integration-LSHT" ]; then
+      echo 'loader_test is starting ...'
+    fi
+  ### tools
+  - |
+    if [ "$TEST_TYPE" == "individual-tools" -o "$TEST_TYPE" == "integration-LSHT" ]; then
+      echo 'tools_test is starting ...'
+    fi
+  ### hubble
+  - |
+    if [ "$TEST_TYPE" == "individual-hubble" -o "$TEST_TYPE" == "integration-LSHT" ]; then
+      echo 'hubble_test is starting ...'
+    fi
 
+### 统计测试结果
 after_script:
   - echo 'after_script...'
 
+### 关闭 graph
 after_success:
   - echo 'after_success...'
       
@@ -93,5 +121,4 @@ env:
   - BRANCH_NAME=master
 ### 5类测试类型：integration-LSHT、individual-loader、individual-server、individual-hubble、individual-tools
   - TEST_TYPE=integration-LSHT
-  
   
