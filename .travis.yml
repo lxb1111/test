@@ -65,10 +65,10 @@ install:
 
 ### 拉取指定分支的测试代码、安装依赖包、启动graph组件
 before_script:
-  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/graphTest.git lxb1111/graphTest
-  - cd lxb1111/graphTest/IntegrationTest && sudo pip install -r requirements.txt
+  - git clone --depth=50 --branch=$BRANCH_NAME https://github.com/lxb1111/test.git lxb1111/test
+  - cd lxb1111/test/IntegrationTest && sudo pip install -r requirements.txt
   ### 启动 server
-  - cd ../../../ && scp -rf lxb1111/graphTest/IntegrationTest/config/hugegraph.properties hugegraph/hugegraph-0.11.1/conf/
+  - cd ../../../ && scp -rf lxb1111/test/IntegrationTest/config/hugegraph.properties hugegraph/hugegraph-0.11.1/conf/
   - ./hugegraph/hugegraph-0.11.1/bin/init-store.sh && ./hugegraph/hugegraph-0.11.1/bin/start-hugegraph.sh
   ### 启动 hubble
   - |
@@ -79,7 +79,7 @@ before_script:
     
 ### 执行测试脚本
 script:
-  - cd lxb1111/graphTest/IntegrationTest/graphTest
+  - cd lxb1111/test/IntegrationTest/graphTest
   ### server
   - |
     if [ "$TEST_TYPE" == "individual-server" -o "$TEST_TYPE" == "integration-LSHT" ]; then
