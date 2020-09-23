@@ -2,21 +2,22 @@
 """
 author     : lxb
 note       : 
-create_time: 2020/4/21 7:21 下午
+create_time: 2020/4/22 5:17 下午
 """
 import time
 
 
-class TestClass:
+class TestClass(object):
     """
     不想访问类变量和实例变量，可以用静态方法
     只想访问类内变量，不想访问实例变量用类方法
     即想访问类变量，也想访问实例变量用实例方法
     函数与静态方法相同，只是静态方法的作用域定义在类内
     """
-    __slots__ = ["name", "age", "score"]
 
-    # 类的 __slots__ 列表属性
+    # __slots__ = ["name", "age", "score"]
+
+    # 类的 __slots__ 列表属性 只读
     # 作用：
     #   限定一个类创建的实例只能有固定的实例属性
     #   不允许对象添加列表以外的实例属性(变量)
@@ -43,38 +44,35 @@ class TestClass:
         """
         return c + d
 
-    @classmethod
-    def test2(cls, e):
-        """
-        类方法
-        :param d:
-        :return:
-        """
-        cls.name = e
-        print(cls.name, "欢迎到来")
-
     def test3(self, f, g):
         """
         :param f:
         :param g:
         :return:
         """
-        pass
+        return f + g
 
 
-def test_founction(a, b, c):
+def test_founction(a, b):
     """
     函数
     :param a:
     :param b:
-    :param c:
     :return:
     """
+    return a + b
 
 
 if __name__ == "__main__":
     print(time.ctime())
 
-    cla = TestClass('a', 'b').test1(2, 3)
-    print(cla)
+    print(TestClass('a', 'b').name)
+
+    print(TestClass('a', 'b').test1(2, 3))
+
+    print(TestClass('a', 'b').test2('miss liu'))
+
+    print(TestClass('a', 'b').test3(7, 8))
+
+    print(test_founction(1, 2))
 
