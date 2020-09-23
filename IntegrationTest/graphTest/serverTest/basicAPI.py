@@ -8,7 +8,7 @@ import requests
 
 
 if __name__ == "__main__":
-    url = "http://yq01-m02-kafka02.yq01.baidu.com:8384/gremlin"
+    url = "/gremlin"
     payload = {
         "gremlin": "g.V().limit(3)",
         "bindings": {},
