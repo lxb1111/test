@@ -59,15 +59,17 @@ jobs:
         run: |
             pwd
             ls
-            pip install -r ./requirements.txt
+            pip install -r requirements.txt
 
       - name: edit config and install hugegraph components
         run: |
+          cat config.py
           sed -i 's/^server_port.*$/server_port = 8089/g' config.py
-          python3 start_deploy.py
+          cat config.py
+          python start_deploy.py
 
       - name: run test cases
-        run: python3 test_start.py
+        run: pytest github_action_test.py
 
 
 
