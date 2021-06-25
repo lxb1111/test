@@ -48,13 +48,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-      - name: checkout python scripts and install dependencies
+      - name: checkout python scripts
         uses: actions/checkout@v2
         with:
           ref: master
           fetch-depth: 2
+      
+      - name: install python dependencies
         if: steps.cache-pip.outputs.cache-hit != 'true'
-          run: |
+        run: |
             pwd
             pip install requirements.txt
 
