@@ -1,0 +1,97 @@
+name: hugegraph CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  # 1次/3天 在凌晨一点触发执行任务
+  schedule:
+    - cron: '0 13 */3 * *'
+  # 手动触发
+  workflow_dispatch:
+
+
+jobs:
+  # job: openSource and no auth
+  openSource_no_auth:
+    name: openSource and no auth
+    runs-on: ubuntu-16.04
+    steps:
+      - name: install JDK 8 and cache maven repository
+        - uses: actions/setup-java@v2
+          with:
+            java-version: '8'
+            distribution: 'adopt'
+        - uses: actions/cache@v2
+          with:
+            path: ~/.m2/repository
+            key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+            restore-keys: |
+              ${{ runner.os }}-maven-
+
+
+      - name: install python 3.7 and cache python dependencies
+        - uses: actions/setup-python@v2
+          with:
+            python-version: '3.7'
+            architecture: 'x64'
+        - uses: actions/cache@v2
+          id: cache-pip
+          with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+            restore-keys: |
+              ${{ runner.os }}-pip-
+
+
+      - name: checkout python test scripts and install dependencies
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 2
+        if: steps.cache-pip.outputs.cache-hit != 'true'
+          run: |
+            pwd
+            pip install requirements.txt
+
+      - name: edit config and install hugegraph components
+        run: |
+          sed -i 's/^server_port.*$/server_port = 8089/g' config.py
+          python3 start_deploy.py
+
+      - name: run test cases
+        run: python3 test_start.py
+
+
+
+#  # job: openSource and exist auth
+#  openSource_exist_auth:
+#    name: openSource and exist auth
+#    runs-on: ubuntu-16.04
+#    steps:
+#      - name: server test
+#        run: |
+
+
+
+
+
+
+
+#  # job: business and no auth
+#  business_no_auth:
+#    name: business and no auth
+#    runs-on: ubuntu-16.04
+#    steps:
+#      - name: server test
+#        run: |
+#
+#  # job: business and exist auth
+#  business_exist_auth:
+#    name: business and exist auth
+#    runs-on: ubuntu-16.04
+#    steps:
+#      - name: server test
+#        run: |
